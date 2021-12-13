@@ -6,6 +6,9 @@ export const usePhoneURL = () => {
 
   useEffect(() => {
     const process = data => {
+      if (!data) {
+        return;
+      }
       const [, urlNumber] = data.split('://');
       setNumber(urlNumber);
     };

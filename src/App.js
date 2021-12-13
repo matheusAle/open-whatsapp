@@ -42,7 +42,8 @@ const App = () => {
   const {number: initialNumber} = usePhoneURL();
   const [value, setValue] = useState('');
   const [isInvalid, setInvalid] = useState(false);
-  const [code, setCode] = useState('BR');
+  const [code, setCode] = useState(55);
+  const [country, setCountry] = useState('BR');
   const phoneInput = useRef(null);
   const [key, setKey] = useState(Date.now());
 
@@ -52,7 +53,8 @@ const App = () => {
     }
     const phoneNumber = parsePhoneNumber(initialNumber);
     if (phoneNumber) {
-      setCode(phoneNumber.country);
+      setCode(phoneNumber.countryCallingCode);
+      setCountry(phoneNumber.country);
       setValue(phoneNumber.nationalNumber);
       setKey(Date.now());
     } else {
@@ -61,7 +63,7 @@ const App = () => {
   }, [initialNumber]);
 
   const open = () => {
-    Linking.openURL(`whatsapp://send?phone=${value}`);
+    Linking.openURL(`whatsapp://send?phone=${code + value}`);
   };
 
   return (
@@ -86,9 +88,13 @@ const App = () => {
         ref={phoneInput}
         key={key}
         defaultValue={value}
-        defaultCode={code}
+        defaultCode={country}
         layout="first"
         withDarkTheme
+        onChangeCountry={c => {
+          setCode(c.callingCode);
+          setCountry(c.name);
+        }}
         onChangeText={text => {
           setValue(text);
         }}

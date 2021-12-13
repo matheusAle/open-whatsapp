@@ -2,7 +2,8 @@
   package="com.whatsappopen">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    
     <application
       android:name=".MainApplication"
       android:label="@string/app_name"
@@ -21,11 +22,18 @@
         </intent-filter>
         <intent-filter>
             <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.DEFAULT" />
+            <action android:name="android.intent.action.CALL_BUTTON"/>
             <category android:name="android.intent.category.BROWSABLE" />
+            <category android:name="android.intent.category.DEFAULT" />
+
+            <action android:name="android.intent.action.CALL"/>
+            <action android:name="android.intent.action.DIAL"/>
+            <action android:name="android.intent.action.ACTION_CALL"/>
+
             <data android:scheme="phone" />
             <data android:scheme="tel" />
             <data android:scheme="sms" />
+            <data android:scheme="sip" />
         </intent-filter>
       </activity>
     </application>
